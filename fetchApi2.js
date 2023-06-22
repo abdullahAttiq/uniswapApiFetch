@@ -1,5 +1,6 @@
 const { request, gql } = require('graphql-request');
 
+
 const fetchLatestPairs = async () => {
   const twentyFourHoursAgo = Math.floor((Date.now() - 24 * 60 * 60 * 1000) / 1000); // Calculate the Unix timestamp representing 24 hours ago
 
