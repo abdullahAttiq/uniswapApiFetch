@@ -9,9 +9,29 @@ const contractABI =[{"inputs":[{"internalType":"address","name":"_feeToSetter","
 
 const provider = new JsonRpcProvider('https://mainnet.infura.io/v3/3b19dda4d15d442cb7a4d8988bae5d28');
 const contract = new ethers.Contract(contractAddress, contractABI, provider);
-contract.on('PairCreated', (token0, token1, event) => {
-  console.log('New pair created!');
-  console.log('Token 0:', token0);
-  console.log('Token 1:', token1);
-  console.log('Transaction Hash:', event.transactionHash);
-});
+contract.on('PairCreated', async (token0, token1, pairAddress, event) => {
+    console.log('New pair created!');
+    console.log('Token 0:', token0);
+    console.log('Token 1:', token1);
+    console.log('Pair Address:', pairAddress);
+    console.log('Transaction Hash:', event.transactionHash);
+  
+    // Fetch pair contract
+    const pairContract = new ethers.Contract(pairAddress, contractABI, provider);
+  
+    // Fetch liquidity
+    const reserves = await pairContract.getReserves();
+    const reserve0 = reserves[0].toString();
+    const reserve1 = reserves[1].toString();
+  
+    console.log('Reserve 0:', reserve0);
+    console.log('Reserve 1:', reserve1);
+  });
+  
+  async function startListening() {
+    console.log('Started listening for PairCreated events...');
+  }
+  
+  startListening().catch((error) => {
+    console.error('Error occurred while starting the listener:', error);
+  });
