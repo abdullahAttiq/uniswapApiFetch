@@ -2,12 +2,13 @@ const { ethers, JsonRpcProvider } = require("ethers");
 const axios = require("axios");
 const { contractABI } = require("./ABIs");
 const { buyPair } = require("./pairBuyer");
+const {infuraApi}=require("./private")
 
 const contractAddress = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
 const apiUrl = "https://api.gopluslabs.io/api/v1/token_security/{chain_id}";
 
 const provider = new JsonRpcProvider(
-  "https://mainnet.infura.io/v3/3b19dda4d15d442cb7a4d8988bae5d28"
+  infuraApi
 );
 
 const contract = new ethers.Contract(contractAddress, contractABI, provider);

@@ -1,5 +1,6 @@
 const { ethers } = require("ethers");
 const {routerContractABI}=require("./ABIs")
+const {infuraApi}=require("./private")
 
 async function buyPair(pairData) {
   
@@ -11,8 +12,7 @@ async function buyPair(pairData) {
 
   for (const privateKey of privateKeys) {
     // Connect to the wallet using the private key
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://mainnet.infura.io/v3/3b19dda4d15d442cb7a4d8988bae5d28"
+    const provider = new ethers.providers.JsonRpcProvider(infuraApi
     );
     const wallet = new ethers.Wallet(privateKey, provider);
 
